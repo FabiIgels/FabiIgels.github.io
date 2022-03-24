@@ -8,6 +8,7 @@ main {
     background-color:white
     max-width: 1024px;
     margin: auto;
+    text-align: justify
 }
 
 article{
@@ -18,4 +19,12 @@ article{
 
 article p {
     text-align: justify
+}
+
+a {
+    color: black;
+}
+
+article a:visited {
+    color: darkblue;
 }
