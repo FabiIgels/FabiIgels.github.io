@@ -8,6 +8,10 @@ header {
     text-align: center;
 }
 
+.banner{
+    width: 100%;
+}
+
 .user {
     border-radius: 50%;
     margin-top: -50px;
@@ -43,10 +47,10 @@ footer {
     padding: 1em 2em 3em 2em;
 }
 
-footer.back {
+.back {
     float: left;
 }
 
-footer.next {
+.next {
     float: right;
 }
