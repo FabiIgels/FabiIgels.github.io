@@ -12,6 +12,10 @@ header {
     width: 100%;
 }
 
+article figure img {
+    width: 100%
+}
+
 .user {
     border-radius: 50%;
     margin-top: -50px;
