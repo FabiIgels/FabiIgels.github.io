@@ -24,7 +24,9 @@ article figure img {
 
 main {
     background-color:white
+    /* warum funktioniert hier max-width nicht? nur mit width: 1024px funktionert es*/
     max-width: 1024px;
+    width: 1024px;
     margin: auto;
     text-align: justify
 }
@@ -33,6 +35,7 @@ article{
     padding: 1em;
     text-align: justify
     line-height: 1.2em
+    /* line-height funktioniert glaub ich auch nicht. setzt den Zeilenabstand oder? */
 }
 
 article p {
