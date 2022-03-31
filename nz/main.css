@@ -33,8 +33,7 @@ article figure img {
 }
 
 main {
-    background-color:white
-    /* warum funktioniert hier max-width nicht? nur mit width: 1024px funktionert es*/
+    background-color:white;
     max-width: 1024px;
     width: 1024px;
     margin: auto;
@@ -49,9 +48,8 @@ main {
 
 article{
     padding: 1em;
-    text-align: justify
-    line-height: 1.2em
-    /* line-height funktioniert glaub ich auch nicht. setzt den Zeilenabstand oder? */
+    text-align: justify;
+    line-height: 1.2em;
 }
 
 article p {
