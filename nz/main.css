@@ -24,7 +24,7 @@ header {
 }
 
 article figure img {
-    width: 100%
+    width: 100%;
 }
 
 .user {
@@ -37,7 +37,7 @@ main {
     max-width: 1024px;
     width: 1024px;
     margin: auto;
-    text-align: justify
+    text-align: justify;
 }
 
 #map{
