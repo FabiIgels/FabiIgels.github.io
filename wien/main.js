@@ -63,6 +63,8 @@ async function loadSites(url) {
 
     L.geoJSON(geojson, {
         pointToLayer: function(geoJsonPoint, latlng) {
+            //Das L.marker dient zum testen on Popup auf der richtigen Position ist, sonst iconAnchor setzen
+            //L.marker(latlng).addTo(map)
             //console.log(geoJsonPoint.properties.NAME);
             let popup = `
                 <img src = "${geoJsonPoint.properties.THUMBNAIL}" alt =""> <br>
@@ -71,7 +73,14 @@ async function loadSites(url) {
                 Adresse: ${geoJsonPoint.properties.ADRESSE} <br>
                 <a href = "${geoJsonPoint.properties.WEITERE_INF}">Weblink</a> 
             `;
-            return L.marker(latlng).bindPopup(popup);
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/photo.png", 
+                    iconAnchor: [16,32],
+                    popupAnchor: [0, -37]
+                    // das -37 verschiebt das icon nach oben, wo Null steht verschiebt nach links/rechts
+                })
+            }).bindPopup(popup);
         }
     }).addTo(overlay);
 }
