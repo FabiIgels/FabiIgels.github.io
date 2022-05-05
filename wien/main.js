@@ -107,7 +107,7 @@ async function loadStops(url) {
             `;
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl: "icons/bus.png", 
+                    iconUrl: `icons/bus_${geoJsonPoint.properties.LINE_ID}.png`, 
                     iconAnchor: [16,32],
                     popupAnchor: [0, -37]
                     // das -37 verschiebt das icon nach oben, wo Null steht verschiebt nach links/rechts
