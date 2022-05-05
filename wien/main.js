@@ -46,7 +46,7 @@ L.control.scale({
 L.control.fullscreen().addTo(map);
 
 let miniMap = new L.Control.MiniMap(
-    L.tileLayer.provider("BasemapAT"); {
+    L.tileLayer.provider("BasemapAT"), {
         toggleDisplay: true
     }
 ).addTo(map)
@@ -156,6 +156,25 @@ async function loadHotels(url) {
     layerControl.addOverlay(overlay, "Hotels und Unterkünfte Wien");
     overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
+    L.geoJSON(geojson, {
+        pointToLayer: function(geoJsonPoint, latlng) {
+            //Das L.marker dient zum testen on Popup auf der richtigen Position ist, sonst iconAnchor setzen
+            //L.marker(latlng).addTo(map)
+            console.log(geoJsonPoint.properties.NAME);
+            let popup = `
+                <strong>${geoJsonPoint.properties.BETRIEB}</strong>
+                <hr>
+                Adresse: ${geoJsonPoint.properties.ADRESSE} <br>
+            `;
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/hotel.png", 
+                    iconAnchor: [16,32],
+                    popupAnchor: [0, -37]
+                    // das -37 verschiebt das icon nach oben, wo Null steht verschiebt nach links/rechts
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlay);
 }
-//loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
+loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
