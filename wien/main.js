@@ -48,3 +48,10 @@ L.control.fullscreen().addTo(map);
 let miniMap = new L.Control.MiniMap(
     L.tileLayer.provider("BasemapAT")
 ).addTo(map)
+
+async function loadSites(url) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+    console.log(geojson);
+}
+loadSites(" https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
