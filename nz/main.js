@@ -75,3 +75,9 @@ L.marker([-45.031389, 168.660833]).addTo(map)
         L.circleMarker([hut.lat, hut.lng]).addTo(map)
         .bindPopup(popup)
     }
+
+    let miniMap = new L.Control.MiniMap(
+        L.tileLayer.provider("OpenStreetMap.Mapnik"), {
+            toggleDisplay: true
+        }
+    ).addTo(map);
