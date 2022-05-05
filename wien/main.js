@@ -10,7 +10,7 @@ let startLayer = L.tileLayer.provider("BasemapAT.grau");
 
 let map = L.map("map", {
     center: [stephansdom.lat, stephansdom.lng],
-    zoom: 12,
+    zoom: 16,
     layers: [
         startLayer
     ]
@@ -96,9 +96,27 @@ async function loadStops(url) {
     layerControl.addOverlay(overlay, "Vienna Sightseeing Haltestellen");
     overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
+    L.geoJSON(geojson, {
+        pointToLayer: function(geoJsonPoint, latlng) {
+            //Das L.marker dient zum testen on Popup auf der richtigen Position ist, sonst iconAnchor setzen
+            //L.marker(latlng).addTo(map)
+            //console.log(geoJsonPoint.properties);
+            let popup = `
+            <strong>${geoJsonPoint.properties.LINE_NAME}</strong><br>
+            Station ${geoJsonPoint.properties.STAT_NAME}
+            `;
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/bus.png", 
+                    iconAnchor: [16,32],
+                    popupAnchor: [0, -37]
+                    // das -37 verschiebt das icon nach oben, wo Null steht verschiebt nach links/rechts
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlay);
 }
-//loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
+loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
 // Linien Vienna Sightseeing
 async function loadLines(url) {
