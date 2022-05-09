@@ -130,7 +130,7 @@ async function loadLines(url) {
 
     L.geoJSON(geojson).addTo(overlay);
 }
-//loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
+loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
 // Fußgängerzonen Wien
 async function loadZones(url) {
@@ -144,7 +144,7 @@ async function loadZones(url) {
 
     L.geoJSON(geojson).addTo(overlay);
 }
-//loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
+loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
 
 // Hotels Wien
 async function loadHotels(url) {
@@ -157,23 +157,45 @@ async function loadHotels(url) {
     overlay.addTo(map);
 
     L.geoJSON(geojson, {
-        pointToLayer: function(geoJsonPoint, latlng) {
-            //Das L.marker dient zum testen on Popup auf der richtigen Position ist, sonst iconAnchor setzen
-            //L.marker(latlng).addTo(map)
-            console.log(geoJsonPoint.properties.NAME);
+        pointToLayer: function (geoJsonPoint, latlng) {
+            console.log(geoJsonPoint.properties);
             let popup = `
-                <strong>${geoJsonPoint.properties.BETRIEB}</strong>
+                <strong>${geoJsonPoint.properties.BETRIEB}</strong><br>
+                ${geoJsonPoint.properties.BETRIEBSART_TXT}<br>
+                ${geoJsonPoint.properties.KATEGORIE_TXT}<br>
+                Adresse: ${geoJsonPoint.properties.ADRESSE}<br>
+                Telefonnummer: ${geoJsonPoint.properties.KONTAKT_TEL}<br>
                 <hr>
-                Adresse: ${geoJsonPoint.properties.ADRESSE} <br>
-            `;
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: "icons/hotel.png", 
-                    iconAnchor: [16,32],
-                    popupAnchor: [0, -37]
-                    // das -37 verschiebt das icon nach oben, wo Null steht verschiebt nach links/rechts
-                })
-            }).bindPopup(popup);
+                <a href="${geoJsonPoint.properties.KONTAKT_EMAIL}">E-Mail</a><br>
+                <a href="${geoJsonPoint.properties.WEBLINK1}">Weblink</a>
+                
+                `;
+            if (geoJsonPoint.properties.BETRIEBSART == "H") {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_0star.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
+                }).bindPopup(popup);
+            } else if (geoJsonPoint.properties.BETRIEBSART == "P") {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/lodging_0star.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
+                }).bindPopup(popup);
+            } else {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/apartment-2.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
+                }).bindPopup(popup);
+            }
+
         }
     }).addTo(overlay);
 }
