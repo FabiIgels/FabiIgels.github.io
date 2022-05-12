@@ -169,7 +169,14 @@ async function loadZones(url) {
     layerControl.addOverlay(overlay, "Fußgängerzonen Wien");
     overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
+// die || sind der logical or operator, wenn dann "" ohne etwas drinnen ist dann steht da nichts falls nichts in der Angabe steht (vermeidet dass null dort steht)
+    L.geoJSON(geojson).bindPopup(function (layer) {
+        return`
+           <h4>Fußgängerzone ${layer.feature.properties.ADRESSE}</h4>
+            <p>${layer.feature.properties.ZEITRAUM || ""}</p>
+            <p>${layer.feature.properties.AUSN_TEXT || ""}</p>
+        `;
+    }).addTo(overlay);
 }
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
 
