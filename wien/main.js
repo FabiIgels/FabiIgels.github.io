@@ -253,10 +253,19 @@ async function loadHotels(url) {
     form.suchen.onclick = function() {
         console.log (form.hotel.value);
         hotelsLayer.eachLayer(function(marker) {
-            console.log(marker)
-            console.log(marker.getLatLng())
-            console.log(marker.getPopup())
-            console.log(marker.feature.properties.BETRIEB)
+            //console.log(marker)
+ 
+            // map.setView setzt die Position auf das Hotel das gesucht wurde
+            // marker.openpopup lässt gleich das Popup aufgehen wenn das Hotel gesucht wird
+            if (form.hotel.value == marker.feature.properties.BETRIEB) {
+                //console.log(marker.getLatLng())
+                //console.log(marker.getPopup())
+                //console.log(marker.feature.properties.BETRIEB)
+                map.setView(marker.getLatLng(), 17)
+                marker.openPopup ();
+               
+
+            }
         })
     }
 
