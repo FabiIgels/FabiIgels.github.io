@@ -170,7 +170,16 @@ async function loadZones(url) {
     overlay.addTo(map);
 
 // die || sind der logical or operator, wenn dann "" ohne etwas drinnen ist dann steht da nichts falls nichts in der Angabe steht (vermeidet dass null dort steht)
-    L.geoJSON(geojson).bindPopup(function (layer) {
+    L.geoJSON(geojson, {
+        style:function (feature) {
+            return {
+                color: "#F012BE",
+                weight: 1,
+                opacity: 0.1,
+                fillOpacity: 0.1
+            }
+        }
+    }).bindPopup(function (layer) {
         return`
            <h4>Fußgängerzone ${layer.feature.properties.ADRESSE}</h4>
             <p>${layer.feature.properties.ZEITRAUM || ""}</p>
