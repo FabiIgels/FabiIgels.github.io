@@ -143,7 +143,7 @@ const COLORS = {
         },
         {
             min: 80,
-            max: 200,
+            max: 300,
             color: "#ff3232"
         },
 
