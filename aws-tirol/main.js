@@ -207,8 +207,8 @@ let drawHumidity = function (geojson) {
     L.geoJson(geojson, {
         filter: function (geoJsonPoint) {
             if (geoJsonPoint.properties.RH >= 0 && geoJsonPoint.properties.RH <= 100) {
-                return true;
-            }
+                return true
+            };
         },
         pointToLayer: function (geoJsonPoint, latlng) {
             // L.marker(latlng).addTo(map)
@@ -234,11 +234,11 @@ async function loadData(url) {
     let response = await fetch(url);
     let geojson = await response.json();
 
-    drawStations(geojson)
-    drawTemperature(geojson)
-    drawSnowheight(geojson)
-    drawWind(geojson)
-    drawHumidity(geojson)
+    drawStations(geojson);
+    drawTemperature(geojson);
+    drawSnowheight(geojson);
+    drawWind(geojson);
+    drawHumidity(geojson);
 }
 loadData("https://static.avalanche.report/weather_stations/stations.geojson");
 
