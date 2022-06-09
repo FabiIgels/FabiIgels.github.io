@@ -74,3 +74,7 @@ L.control.fullscreen().addTo(map);
 overlays.gpx.addTo(map);
 
 // GPX Track Layer implementieren
+let gpxTrack = new L.GPX("../data/10.gpx", {
+    async: true, 
+}).addTo(overlays.gpx);
+
