@@ -90,5 +90,24 @@ let gpxTrack = new L.GPX("../data/10.gpx", {
 
 gpxTrack.on("loaded", function(evt) {
     // console.log("loaded gpx event", evt);
+    let gpxLayer = evt.target;
     map.fitBounds(evt.target.getBounds());
+    let popup = `<h3>Hardfacts der Etappe 10</h3>
+    <ul>
+    <li>Streckenlänge: ${(gpxLayer.get_distance()/1000).toFixed()} km</li>
+    <li>tiefster Punkt: ${gpxLayer.get_elevation_min().toFixed()} m</li>
+    <li>höchster Punkt: ${gpxLayer.get_elevation_max().toFixed()} m</li>
+    <li>Höhenmeter bergauf: ${gpxLayer.get_elevation_gain().toFixed()} m</li>
+    <li>Höhenmeter bergab: ${gpxLayer.get_elevation_loss().toFixed()} m</li>`;
+    gpxLayer.bindPopup(popup);
+});
+
+let elevationControl = L.control.elevation({
+    time: false,
+    elevationDiv: "#profile",
+    theme:'bike-tirol',
+    height: 200,
+}).addTo(map);
+gpxTrack.on("addline", function(evt) {
+    elevationControl.addData(evt.line);
 });
